@@ -1,0 +1,187 @@
+# Room Booking App
+
+A modern room booking application built with Next.js, PostgreSQL, Prisma, and NextAuth.
+
+## Features
+
+- **User Authentication**: Secure login/register with NextAuth and bcrypt password hashing
+- **Room Management**: View available rooms and their schedules
+- **Booking System**: Request room bookings with approval workflow
+- **Admin Panel**: Approve or reject booking requests with comments
+- **Calendar Integration**: FullCalendar integration showing approved, pending, and rejected bookings
+- **Real-time Updates**: Dynamic calendar updates based on booking status
+
+## Tech Stack
+
+- **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: PostgreSQL
+- **Authentication**: NextAuth.js with Credentials provider
+- **Calendar**: FullCalendar React
+- **Validation**: Zod
+- **Styling**: Tailwind CSS
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- PostgreSQL database (or use Docker Compose)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd room-booking-app
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your database URL and other configuration:
+```
+DATABASE_URL=postgresql://room:room@localhost:5432/roombooker?schema=public
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
+SEED_ADMIN_EMAIL=admin@example.com
+SEED_ADMIN_PASSWORD=admin123
+```
+
+4. Start PostgreSQL (using Docker Compose):
+```bash
+docker-compose up -d
+```
+
+5. Run database migrations:
+```bash
+npx prisma migrate dev --name init
+```
+
+6. Generate Prisma client:
+```bash
+npm run prisma:generate
+```
+
+7. Seed the database:
+```bash
+npm run seed
+```
+
+8. Start the development server:
+```bash
+npm run dev
+```
+
+Visit `http://localhost:3000` to see the application.
+
+## Usage
+
+### Default Users
+
+After seeding, you'll have:
+- **Admin**: admin@example.com / admin123 (or your custom credentials from .env)
+- **Regular User**: user@example.com / user123
+
+### User Flow
+
+1. **Register/Login**: Create an account or sign in
+2. **Browse Rooms**: View available rooms from the dashboard
+3. **Book a Room**: Select a room, choose date/time, and submit a booking request
+4. **Track Status**: View your booking status (Pending/Approved/Rejected)
+
+### Admin Flow
+
+1. **Login as Admin**: Use admin credentials
+2. **Review Requests**: Access the Admin panel to see pending requests
+3. **Approve/Reject**: Approve requests or reject with comments
+4. **Monitor Calendar**: View all bookings across rooms
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/[...nextauth]` - NextAuth endpoints
+
+### Rooms
+- `GET /api/rooms` - List all rooms
+- `POST /api/rooms` - Create room (admin only)
+- `GET /api/rooms/[id]/availability` - Get room availability
+
+### Bookings
+- `GET /api/bookings` - Get user's bookings
+- `POST /api/bookings` - Create booking request
+
+### Admin
+- `GET /api/admin/requests` - Get pending requests
+- `POST /api/admin/requests/[id]/approve` - Approve request
+- `POST /api/admin/requests/[id]/reject` - Reject request with comment
+
+## Database Schema
+
+### User
+- Authentication and profile information
+- Admin flag for permissions
+
+### Room
+- Room details and metadata
+
+### Booking
+- Booking requests with approval workflow
+- Links users to rooms with time slots
+- Status tracking (PENDING/APPROVED/REJECTED)
+
+## Business Rules
+
+- Only APPROVED bookings block time slots
+- PENDING bookings appear on calendar but don't prevent conflicts
+- Same-day bookings only (MVP limitation)
+- Rejection requires a comment
+- Overlap detection prevents double-booking
+
+## Development
+
+### Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run prisma:generate` - Generate Prisma client
+- `npm run prisma:migrate` - Run database migrations
+- `npm run seed` - Seed database with sample data
+
+### Project Structure
+
+```
+/
+├── app/                    # Next.js App Router pages
+│   ├── (auth)/            # Authentication pages
+│   ├── (protected)/       # Protected user pages
+│   ├── (admin)/           # Admin-only pages
+│   └── api/               # API routes
+├── src/
+│   ├── components/        # React components
+│   └── lib/               # Utility libraries
+├── prisma/                # Database schema and migrations
+├── styles/                # Global styles
+└── types/                 # TypeScript type definitions
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.

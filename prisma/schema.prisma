@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  firstName String?
+  lastName  String?
+  email     String   @unique
+  image     String?
+  emailVerified DateTime?
+  password  String?
+  phoneE164 String?   @unique
+  isAdmin   Boolean  @default(false)
+  isOwner   Boolean  @default(false)
+  requests  Booking[] @relation("UserRequests")
+  accounts  Account[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Room {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  bookings  Booking[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Booking {
+  id          String         @id @default(cuid())
+  requester   User           @relation("UserRequests", fields: [requesterId], references: [id])
+  requesterId String
+  room        Room           @relation(fields: [roomId], references: [id])
+  roomId      String
+  eventName   String
+  description String
+  start       DateTime       // store UTC
+  end         DateTime
+  status      ApprovalStatus @default(PENDING)
+  comment     String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([roomId, start, end])
+}

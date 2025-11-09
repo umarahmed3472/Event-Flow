@@ -15,7 +15,7 @@ export default function NavBar() {
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           <Link href="/rooms" className="text-xl font-bold">
-            Room Booker
+            Event Flow
           </Link>
           <Link href="/rooms" className="hover:text-blue-200 text-sm sm:text-base">
             Rooms

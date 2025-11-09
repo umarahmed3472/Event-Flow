@@ -7,8 +7,8 @@ import Providers from '@/src/components/Providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Room Booking App',
-  description: 'Book rooms. Simple approvals.',
+  title: 'Event Flow',
+  description: 'Easy tracking for your next event.',
   viewport: {
     width: 'device-width',
     initialScale: 1,

@@ -51,9 +51,11 @@ Add the following to your .env file:
 ```
 DATABASE_URL=postgresql://room:room@localhost:5432/roombooker?schema=public
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key-here
+NEXTAUTH_SECRET=changeme
 SEED_ADMIN_EMAIL=admin@example.com
 SEED_ADMIN_PASSWORD=admin123
+GOOGLE_CLIENT_ID=googleclientid
+GOOGLE_CLIENT_SECRET=googleclientsecret
 ```
 
 4. Start PostgreSQL (using Docker Compose):

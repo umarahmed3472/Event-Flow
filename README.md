@@ -1,15 +1,16 @@
-# Room Booking App
+# Event Flow
 
-A modern room booking application built with Next.js, PostgreSQL, Prisma, and NextAuth.
+This is an Event hall and room reservation app for a local community organization in Buffalo that needed a modern solution to their current processes of reserving their event hall. I am still actively adding new features to this web app, including email/text message notifications and agent automations, better mobile experience, internal chat, and ability to scale for other event halls and organizations.
+
+The following info is still being updated and does not reflect all features of the app so far.
 
 ## Features
-
-- **User Authentication**: Secure login/register with NextAuth and bcrypt password hashing
-- **Room Management**: View available rooms and their schedules
-- **Booking System**: Request room bookings with approval workflow
-- **Admin Panel**: Approve or reject booking requests with comments
-- **Calendar Integration**: FullCalendar integration showing approved, pending, and rejected bookings
-- **Real-time Updates**: Dynamic calendar updates based on booking status
+- **User Authentication**: I used nextauth as well as a 'Continue with Google' option for easier login experience.
+- **Room Management**: The 'Owner' and adjustable 'admin' users can approve and reject (with comments) user room requests
+- **Booking System**: Users can submit requests for specific rooms available at the property
+- **Admin Panel**: Admins can review incoming requests on a dashboard
+- **Calendar Integration**: FullCalendar integration showing approved and pending - only admins and the user who requested can see the details of their respective event
+- **Real-time Updates**: The calendar updates when a submission is approved, and the event gets updated on the user's dashboard
 
 ## Tech Stack
 
@@ -17,7 +18,7 @@ A modern room booking application built with Next.js, PostgreSQL, Prisma, and Ne
 - **Backend**: Next.js API Routes, Prisma ORM
 - **Database**: PostgreSQL
 - **Authentication**: NextAuth.js with Credentials provider
-- **Calendar**: FullCalendar React
+- **Calendar**: FullCalendar
 - **Validation**: Zod
 - **Styling**: Tailwind CSS
 
@@ -41,12 +42,12 @@ cd room-booking-app
 npm install
 ```
 
-3. Set up environment variables:
+3. Create the env files:
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` with your database URL and other configuration:
+Add the following to your .env file:
 ```
 DATABASE_URL=postgresql://room:room@localhost:5432/roombooker?schema=public
 NEXTAUTH_URL=http://localhost:3000
@@ -79,8 +80,7 @@ npm run seed
 ```bash
 npm run dev
 ```
-
-Visit `http://localhost:3000` to see the application.
+Go to `http://localhost:3000` 
 
 ## Usage
 
@@ -173,14 +173,6 @@ After seeding, you'll have:
 ├── styles/                # Global styles
 └── types/                 # TypeScript type definitions
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
 
 ## License
 

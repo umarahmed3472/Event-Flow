@@ -9,7 +9,7 @@ export default function HomePage() {
             Event Flow
           </h1>
           <p className="text-gray-600 mb-8">
-            Book rooms. Simple approvals.
+            Easy tracking for your next event.
           </p>
           
           <div className="space-y-4">
